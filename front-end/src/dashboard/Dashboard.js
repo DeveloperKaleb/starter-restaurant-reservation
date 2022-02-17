@@ -8,7 +8,7 @@ import ErrorAlert from "../layout/ErrorAlert";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date }) {
+function Dashboard({ date, addDay, resetDay, subtractDay }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
 
@@ -27,10 +27,13 @@ function Dashboard({ date }) {
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date</h4>
+        <h4 className="mb-0">Reservations for date {date}</h4>
       </div>
       <ErrorAlert error={reservationsError} />
-      {JSON.stringify(reservations)}
+      {JSON.stringify(reservations) === "[]" ? "No reservations for this date" : JSON.stringify(reservations)}
+      <button type="button" onClick={subtractDay}>Previous</button>
+      <button type="button" onClick={resetDay}>Today</button>
+      <button type="button" onClick={addDay}>Next</button>
     </main>
   );
 }
