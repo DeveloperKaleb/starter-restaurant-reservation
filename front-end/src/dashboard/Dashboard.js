@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import FormattedReservation from "./FormattedReservation";
 
 /**
  * Defines the dashboard page.
@@ -23,17 +24,32 @@ function Dashboard({ date, addDay, resetDay, subtractDay }) {
     return () => abortController.abort();
   }
 
+  function sortReservations(reservations) {
+    const sortedReservations = reservations.sort((resA, resB) => {
+      const numA = Number(resA.reservation_time.slice(0, 2) + resA.reservation_time.slice(3, 5))
+      const numB = Number(resB.reservation_time.slice(0, 2) + resB.reservation_time.slice(3, 5))
+      return numA - numB
+    })
+    return sortedReservations
+  }
+
+  const reservationsInOrder = sortReservations(reservations)
+
+  const formattedReservations = reservationsInOrder.map((reservation) => {
+    return <FormattedReservation reservation={reservation}/>
+  })
+
   return (
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
         <h4 className="mb-0">Reservations for date {date}</h4>
       </div>
-      <ErrorAlert error={reservationsError} />
-      {JSON.stringify(reservations) === "[]" ? "No reservations for this date" : JSON.stringify(reservations)}
       <button type="button" onClick={subtractDay}>Previous</button>
       <button type="button" onClick={resetDay}>Today</button>
       <button type="button" onClick={addDay}>Next</button>
+      <ErrorAlert error={reservationsError} />
+      {JSON.stringify(reservations) === "[]" ? "No reservations for this date" : <li>{formattedReservations}</li>}
     </main>
   );
 }

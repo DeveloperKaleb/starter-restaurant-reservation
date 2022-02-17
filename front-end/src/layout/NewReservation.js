@@ -26,6 +26,7 @@ function NewReservation() {
   const makeReservation = () => {
       createReservation(formData)
       setFormData(initialFormData)
+      
   }
 
   return (
