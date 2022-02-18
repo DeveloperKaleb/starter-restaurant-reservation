@@ -24,18 +24,7 @@ function Dashboard({ date, addDay, resetDay, subtractDay }) {
     return () => abortController.abort();
   }
 
-  function sortReservations(reservations) {
-    const sortedReservations = reservations.sort((resA, resB) => {
-      const numA = Number(resA.reservation_time.slice(0, 2) + resA.reservation_time.slice(3, 5))
-      const numB = Number(resB.reservation_time.slice(0, 2) + resB.reservation_time.slice(3, 5))
-      return numA - numB
-    })
-    return sortedReservations
-  }
-
-  const reservationsInOrder = sortReservations(reservations)
-
-  const formattedReservations = reservationsInOrder.map((reservation) => {
+  const formattedReservations = reservations.map((reservation) => {
     return <FormattedReservation reservation={reservation}/>
   })
 

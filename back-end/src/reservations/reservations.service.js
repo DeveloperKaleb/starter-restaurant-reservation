@@ -5,6 +5,7 @@ async function list(req) {
       return knex("reservations")
         .select("*")
         .where({"reservation_date": req.query.date})
+        .orderBy("reservation_time", "asc")
     } else {
       return knex("reservations")
         .select("*")
