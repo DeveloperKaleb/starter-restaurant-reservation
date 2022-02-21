@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import ErrorAlert from "./ErrorAlert";
 import { createReservation } from "../utils/api" 
 
 function NewReservation() {
@@ -12,6 +13,7 @@ function NewReservation() {
     people: 0,
   };
   const [formData, setFormData] = useState(initialFormData);
+  const [error, setError] = useState(null)
 
   const updateForm = (event) => {
     const { value, name } = event.target;
@@ -23,10 +25,12 @@ function NewReservation() {
     });
   };
 
-  const makeReservation = () => {
+  const makeReservation = (event) => {
+      event.preventDefault()
+      setError(null)
       createReservation(formData)
-      setFormData(initialFormData)
-      
+        .then(setFormData(initialFormData))
+        .catch(setError)
   }
 
   return (
@@ -34,6 +38,7 @@ function NewReservation() {
       <div>
         <form onSubmit={makeReservation}>
           <h2>Create Reservation</h2>
+          <ErrorAlert error={error} />
           <div>
             <label htmlFor="first_name">First Name:</label>
             <input
@@ -76,6 +81,7 @@ function NewReservation() {
             <label htmlFor="people">Number of People in Party:</label>
             <input
               name="people"
+              type="number"
               onChange={updateForm}
               value={formData.people}
             />
