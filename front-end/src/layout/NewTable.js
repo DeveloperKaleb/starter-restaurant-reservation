@@ -1,23 +1,35 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { createTable } from "../utils/api";
 
 function NewTable() {
-  const initialFormdata = {
+  const initialFormData = {
     table_name: "",
     capacity: "",
   };
   const [formData, setFormData] = useState(initialFormData);
+  const [error, setError] = useState(null);
 
   const changeHandler = (event) => {
-    (prevData) => {
-      const { name, value } = event.target;
-      setFormData({
+    const { name, value } = event.target;
+    setFormData((prevData) => {
+      return {
         ...prevData,
         [name]: value,
-      });
-    };
+      };
+    });
   };
+
+  const createTable = (event) => {
+    event.preventDefault()
+    setError(null)
+    createTable(formData)
+      .then(setFormData(initialFormData))
+      .catch(setError)
+}
+
   return (
-    <form>
+    <form onSubmit={createTable}>
       <label htmlFor="table_name">Table Name:</label>
       <input
         name="table_name"
