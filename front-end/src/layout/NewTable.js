@@ -20,7 +20,7 @@ function NewTable() {
     });
   };
 
-  const createTable = (event) => {
+  const makeTable = (event) => {
     event.preventDefault()
     setError(null)
     createTable(formData)
@@ -29,7 +29,7 @@ function NewTable() {
 }
 
   return (
-    <form onSubmit={createTable}>
+    <form onSubmit={makeTable}>
       <label htmlFor="table_name">Table Name:</label>
       <input
         name="table_name"

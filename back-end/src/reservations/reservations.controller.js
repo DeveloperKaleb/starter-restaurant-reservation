@@ -95,7 +95,7 @@ function validateAttributes(req, res, next) {
     people,
   } = req.body.data;
 
-  const isNumber = parseInt(people) !== NaN;
+  const isNumber = typeof people === "number";
 
   if (
     first_name &&

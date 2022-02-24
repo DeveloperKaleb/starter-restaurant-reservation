@@ -16,7 +16,10 @@ function NewReservation() {
   const [error, setError] = useState(null)
 
   const updateForm = (event) => {
-    const { value, name } = event.target;
+    let { value, name } = event.target;
+    if (name === "people") {
+      value = Number(value)
+    }
     setFormData((prevData) => {
       return {
         ...prevData,
