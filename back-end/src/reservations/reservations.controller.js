@@ -141,6 +141,21 @@ async function create(req, res) {
   });
 }
 
+async function read(req, res, next) {
+  const { reservation_id } = req.params;
+  const data = await service.read(reservation_id)
+  if (data) {
+    res.json({
+      data,
+    });
+  } else {
+    next({
+      message: `Reservation_id ${reservation_id} doesn't exist`,
+      status: 404,
+    });
+  }
+}
+
 module.exports = {
   create: [
     dataExists,
@@ -151,4 +166,5 @@ module.exports = {
     asyncErrorBoundary(create),
   ],
   list: [asyncErrorBoundary(list)],
+  read: [asyncErrorBoundary(read)]
 };
