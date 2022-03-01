@@ -10,7 +10,7 @@ import FormattedTables from "./FormattedTables";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date, addDay, resetDay, subtractDay }) {
+function Dashboard({ date, addDay, setDay, subtractDay }) {
   const [reservations, setReservations] = useState([]);
   const [tables, setTables] = useState([])
   const [reservationsError, setReservationsError] = useState(null);
@@ -43,13 +43,14 @@ function Dashboard({ date, addDay, resetDay, subtractDay }) {
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date {date}</h4>
+        <h4 className="mb-0">Reservations for date {date}</h4> 
+        {/*The h4 above is currently rendering as an object because of the way I'm passing throught the data */}
       </div>
       <div>
         <button type="button" onClick={subtractDay}>
           Previous
         </button>
-        <button type="button" onClick={resetDay}>
+        <button type="button" onClick={() => setDay()}>
           Today
         </button>
         <button type="button" onClick={addDay}>

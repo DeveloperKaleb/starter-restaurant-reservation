@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import ErrorAlert from "./ErrorAlert";
 import { createReservation } from "../utils/api" 
 
-function NewReservation() {
+function NewReservation({ setDay }) {
   const initialFormData = {
     first_name: "",
     last_name: "",
@@ -14,6 +14,7 @@ function NewReservation() {
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState(null)
+  const history = useHistory();
 
   const updateForm = (event) => {
     let { value, name } = event.target;
@@ -32,7 +33,11 @@ function NewReservation() {
       event.preventDefault()
       setError(null)
       createReservation(formData)
+        .then((response) => {
+          setDay(new Date(response.reservation_date + "T00:00:00"))
+        })
         .then(setFormData(initialFormData))
+        .then(() => history.push("/dashboard"))
         .catch(setError)
   }
 
@@ -61,7 +66,6 @@ function NewReservation() {
             <input
               name="mobile_number"
               type="tel"
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
               onChange={updateForm}
               value={formData.mobile_number}
               required
@@ -71,7 +75,6 @@ function NewReservation() {
               name="reservation_date"
               type="date"
               placeholder="YYYY-MM-DD"
-              pattern="\d{4}-\d{2}-\d{2}"
               onChange={updateForm}
               value={formData.reservation_date}
               required

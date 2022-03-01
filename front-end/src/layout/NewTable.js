@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { createTable } from "../utils/api";
 
 function NewTable() {
@@ -9,6 +9,7 @@ function NewTable() {
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState(null);
+  const history = useHistory();
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
@@ -25,6 +26,7 @@ function NewTable() {
     setError(null)
     createTable(formData)
       .then(setFormData(initialFormData))
+      .then(() => history.push("/dashboard"))
       .catch(setError)
 }
 

@@ -33,7 +33,13 @@ function Routes() {
     return asDateString(new Date(setDate))
   })}
 
-  const resetDay = () => {setCurrentDate(date)} 
+  const setDay = (day = null) => {
+    if (day) {
+      setCurrentDate(asDateString(day))
+    } else {
+    setCurrentDate(date)
+    }
+  } 
 
   return (
     <Switch>
@@ -44,10 +50,10 @@ function Routes() {
         <Redirect to={"/dashboard"} />
       </Route>
       <Route exact={true} path="/reservations/new">
-        <NewReservation />
+        <NewReservation setDay={setDay}/>
       </Route>
       <Route path="/dashboard">
-        <Dashboard date={currentDate} addDay={addDay} resetDay={resetDay} subtractDay={subtractDay} />
+        <Dashboard date={currentDate} addDay={addDay} setDay={setDay} subtractDay={subtractDay} />
       </Route>
       <Route exact={true} path="/tables/new">
         <NewTable />
