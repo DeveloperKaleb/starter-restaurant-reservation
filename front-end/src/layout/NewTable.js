@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { createTable } from "../utils/api";
+import ErrorAlert from "./ErrorAlert";
 
 function NewTable() {
   const initialFormData = {
@@ -12,7 +13,10 @@ function NewTable() {
   const history = useHistory();
 
   const changeHandler = (event) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
+    if (name === "capacity") {
+      value = Number(value)
+    }
     setFormData((prevData) => {
       return {
         ...prevData,
@@ -31,26 +35,25 @@ function NewTable() {
 }
 
   return (
+    <>
+    <ErrorAlert error={error} />
     <form onSubmit={makeTable}>
       <label htmlFor="table_name">Table Name:</label>
       <input
         name="table_name"
         onChange={changeHandler}
         value={formData.table_name}
-        required
       />
       <label htmlFor="capacity">Capacity:</label>
       <input
         name="capacity"
         onChange={changeHandler}
         value={formData.capacity}
-        required
       />
       <button type="submit">Submit</button>
-      <Link to="/">
-        <button type="button">Cancel</button>
-      </Link>
+      <button type="button" onClick={() => history.goBack()}>Cancel</button>
     </form>
+    </>
   );
 }
 

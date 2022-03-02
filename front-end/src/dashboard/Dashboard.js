@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom"
 import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import FormattedReservation from "./FormattedReservation";
@@ -15,6 +16,7 @@ function Dashboard({ date, addDay, setDay, subtractDay }) {
   const [tables, setTables] = useState([])
   const [reservationsError, setReservationsError] = useState(null);
   const [tablesError, setTablesError] = useState(null)
+  const { search } = useLocation();
 
   useEffect(loadDashboard, [date]);
 
@@ -42,9 +44,9 @@ function Dashboard({ date, addDay, setDay, subtractDay }) {
   return (
     <main>
       <h1>Dashboard</h1>
+      <button onClick={() => console.log(search, typeof search, Boolean(search))}>Test</button>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date {date}</h4> 
-        {/*The h4 above is currently rendering as an object because of the way I'm passing throught the data */}
+        <h4 className="mb-0">Reservations for date {date}</h4>
       </div>
       <div>
         <button type="button" onClick={subtractDay}>

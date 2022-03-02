@@ -10,6 +10,7 @@ function FormattedReservation({ reservation }) {
     reservation_time,
     people,
   } = reservation;
+  
   return (
       <li>
           <h3>{first_name} {last_name}</h3>
