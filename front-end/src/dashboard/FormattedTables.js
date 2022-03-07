@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import ErrorAlert from "../layout/ErrorAlert";
-import { finishTable, changeStatus } from "../utils/api";
+import { finishTable, listReservations, listTables } from "../utils/api";
 
-function FormattedTables({ table }) {
+function FormattedTables({ setReservations, setReservationsError, setTables, setTablesError, date, table }) {
   const { table_id, table_name, capacity, reservation_id } = table;
-  const [ finishError, setFinishError ] = useState(null);
-  const [ statusError, setStatusError ] = useState(null);
+  const [finishError, setFinishError] = useState(null);
 
   function confirmFinish() {
     if (
@@ -15,7 +14,16 @@ function FormattedTables({ table }) {
     )
       return null;
     finishTable(table_id)
-      .then(document.location.reload())
+      .then(() => {
+        const abortController = new AbortController()
+        listReservations({ date }, abortController.signal)
+          .then(setReservations)
+          .catch(setReservationsError);
+        listTables(abortController.signal)
+          .then(setTables)
+          .catch(setTablesError);
+        return () => abortController.abort()
+      })
       .catch(setFinishError);
   }
 

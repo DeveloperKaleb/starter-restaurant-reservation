@@ -34,7 +34,7 @@ function NewReservation({ setDay }) {
       setError(null)
       createReservation(formData)
         .then((response) => {
-          setDay(new Date(response.reservation_date + "T00:00:00"))
+          setDay(new Date(response.reservation_date))
         })
         .then(setFormData(initialFormData))
         .then(() => history.push("/dashboard"))
