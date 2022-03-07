@@ -19,7 +19,6 @@ import { today, asDateString } from "../utils/date-time";
  */
 function Routes() {
   let date = today()
-  // if a 'date' query sting is in the url this will use it to redefine the 'date' variable
   const { search } = useLocation()
   if (search) {
     const junkIndex = search.indexOf("=")
@@ -28,6 +27,7 @@ function Routes() {
     date = asDateString(dateObject)
   }
   const [currentDate, setCurrentDate] = useState(date)
+  
   
   const addDay = () => {setCurrentDate((prevDate) => {
     const cloneDate = new Date(prevDate + "T00:00:00")

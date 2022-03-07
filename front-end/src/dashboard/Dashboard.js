@@ -12,11 +12,10 @@ import FormattedTables from "./FormattedTables";
  * @returns {JSX.Element}
  */
 function Dashboard({ date, addDay, setDay, subtractDay }) {
-  const [reservations, setReservations] = useState([]);
-  const [tables, setTables] = useState([])
+  const [reservations, setReservations] = useState(null);
+  const [tables, setTables] = useState(null)
   const [reservationsError, setReservationsError] = useState(null);
   const [tablesError, setTablesError] = useState(null)
-  const { search } = useLocation();
 
   useEffect(loadDashboard, [date]);
 
@@ -32,19 +31,25 @@ function Dashboard({ date, addDay, setDay, subtractDay }) {
       .catch(setTablesError)
     return () => abortController.abort();
   }
+  
+  let formattedReservations = [];
+  let formattedTables = [];
+  if (tables && reservations) {
+  const filteredReservations = reservations.filter((reservation) => reservation?.status !== "finished")
 
-  const formattedReservations = reservations.map((reservation) => {
+  formattedReservations = filteredReservations.map((reservation) => {
     return <FormattedReservation reservation={reservation} />;
   });
 
-  const formattedTables = tables.map((table) => {
+  formattedTables = tables.map((table) => {
     return <FormattedTables table={table} />
   })
+}
 
   return (
     <main>
       <h1>Dashboard</h1>
-      <button onClick={() => console.log(search, typeof search, Boolean(search))}>Test</button>
+      <button onClick={() => console.log("testing")}>Test</button>
       <div className="d-md-flex mb-3">
         <h4 className="mb-0">Reservations for date {date}</h4>
       </div>
@@ -62,7 +67,7 @@ function Dashboard({ date, addDay, setDay, subtractDay }) {
         {JSON.stringify(reservations) === "[]" ? (
           "No reservations for this date"
         ) : (
-          <ul>{formattedReservations}</ul>
+          <ul>{reservations ? formattedReservations : null}</ul>
         )}
       </div>
       <div>
@@ -70,7 +75,7 @@ function Dashboard({ date, addDay, setDay, subtractDay }) {
         {JSON.stringify(tables) === "[]" ? (
           "No tables created"
         ) : (
-          <ul>{formattedTables}</ul>
+          <ul>{tables ? formattedTables : null}</ul>
         )}
       </div>
     </main>

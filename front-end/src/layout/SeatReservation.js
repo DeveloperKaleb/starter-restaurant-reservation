@@ -6,7 +6,7 @@ import ErrorAlert from "./ErrorAlert";
 function SeatReservation() {
     const params = useParams();
     const history = useHistory();
-    const data = JSON.parse(JSON.stringify(params));
+    const data = params;
     const [tables, setTables] = useState([]);
     const [tablesError, setTablesError] = useState(null);
     const [occupyError, setOccupyError] = useState(null);
@@ -31,11 +31,9 @@ function SeatReservation() {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        
         const { value } = event.target[0]
-        console.log(event.target[0].value)
         occupyTable(data, value)
-          .then(() => history.push("/dashboard"))
+          .then(() => history.push("/"))
           .catch(setOccupyError)
     }
 

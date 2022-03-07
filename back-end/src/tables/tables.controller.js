@@ -47,8 +47,9 @@ function dataExists(req, res, next) {
 
     const enoughSpace = Number(existingTable?.capacity) >= Number(reservation?.people)
     const tableIsNotOccupied = existingTable?.reservation_id === null
+    const reservationIsNotSeated = reservation?.status !== "seated"
     
-    if (reservation_id && reservation && existingTable && enoughSpace && tableIsNotOccupied) {
+    if (reservation_id && reservation && existingTable && enoughSpace && tableIsNotOccupied && reservationIsNotSeated) {
       res.locals.tableId = table_id
       next()
     } else if (reservation_id && !reservation) {
@@ -58,6 +59,7 @@ function dataExists(req, res, next) {
       })
     } else {
       let problem = ""
+      !reservationIsNotSeated ? problem = problem.concat(" unseated reservation") : null
       !reservation_id ? problem = problem.concat(" reservation_id") : null
       !existingTable ? problem = problem.concat(" valid table_id") : null
       !enoughSpace ? problem = problem.concat(" table with enough capacity for the reservation") : null
@@ -88,7 +90,9 @@ function dataExists(req, res, next) {
     const { reservation_id } = req.body.data;
     const { tableId } = res.locals;
 
+    
     const returned = await service.update(reservation_id, tableId)
+    await reservationsService.updateStatus( reservation_id, "seated")
     const data = returned[0]
 
     if (data) {
@@ -103,6 +107,7 @@ function dataExists(req, res, next) {
     const table = await service.read( table_id )
 
     if (table?.reservation_id) {
+      res.locals.reservationId = table.reservation_id
       res.locals.tableId = table_id
       next()
     } else if (table_id && table?.reservation_id === null) {
@@ -119,9 +124,10 @@ function dataExists(req, res, next) {
   }
 
   async function deleteRecord(req, res) {
-    const { tableId } = res.locals
+    const { tableId, reservationId } = res.locals
 
     const returned = await service.deleteRecord( tableId )
+    await reservationsService.updateStatus( reservationId, "finished")
     const data = returned[0]
     res.status(200).json({
       data,
