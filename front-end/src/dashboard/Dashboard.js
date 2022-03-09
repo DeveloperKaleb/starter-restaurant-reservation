@@ -68,7 +68,6 @@ function Dashboard({ reservations, setReservations, reservationsError, setReserv
   return (
     <main>
       <h1>Dashboard</h1>
-      <button onClick={() => console.log(reservations)}>Test</button>
       <div className="d-md-flex mb-3">
         <h4 className="mb-0">Reservations for date {date}</h4>
       </div>
