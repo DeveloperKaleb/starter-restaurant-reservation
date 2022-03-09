@@ -22,14 +22,15 @@ function Search() {
   };
 
   const searchReservations = (event) => {
-    event.preventDefault();
     const abortController = new AbortController();
+    event.preventDefault();
     setError(null);
 
     const { mobile_number } = formData;
     listReservations({ mobile_number }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
+    return () => abortController.abort();
   };
 
   const formattedReservations = reservations.map((reservation) => {

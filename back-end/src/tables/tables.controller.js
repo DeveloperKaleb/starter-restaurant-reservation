@@ -26,11 +26,11 @@ function dataExists(req, res, next) {
       next()
     } else {
       let invalidAttribute = ""
-      !table_name ? invalidAttribute = invalidAttribute.concat(" table_name") : null
-      !capacity ? invalidAttribute = invalidAttribute.concat(" capacity") : null
-      !tableHasGoodLength ? invalidAttribute = invalidAttribute.concat(" table_name with more than 1 character") : null
-      !capacityIsValid ? invalidAttribute = invalidAttribute.concat(" capacity greater than 0") : null
-      !isNumber ? invalidAttribute = invalidAttribute.concat(" capacity that is a number") : null
+      if (!table_name) invalidAttribute = invalidAttribute.concat(" table_name")
+      if (!capacity) invalidAttribute = invalidAttribute.concat(" capacity")
+      if (!tableHasGoodLength) invalidAttribute = invalidAttribute.concat(" table_name with more than 1 character")
+      if (!capacityIsValid) invalidAttribute = invalidAttribute.concat(" capacity greater than 0")
+      if (!isNumber) invalidAttribute = invalidAttribute.concat(" capacity that is a number")
       next({
         message: `Table must include a ${invalidAttribute.trim()}`,
         status: 400,

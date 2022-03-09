@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
 import NewReservation from "./NewReservation";
 import SeatReservation from "./SeatReservation";
+import EditReservation from "./EditReservation";
 import NewTable from "./NewTable";
 import Search from "./Search";
 import NotFound from "./NotFound";
 import { useLocation } from "react-router-dom"
 import { today, asDateString } from "../utils/date-time";
+import { listReservations } from "../utils/api";
 
 /**
  * Defines all the routes for the application.
@@ -27,7 +29,9 @@ function Routes() {
     date = asDateString(dateObject)
   }
   const [currentDate, setCurrentDate] = useState(date)
-  
+  const [reservations, setReservations] = useState(null);
+  const [reservationsError, setReservationsError] = useState(null);
+
   
   const addDay = () => {setCurrentDate((prevDate) => {
     const cloneDate = new Date(prevDate + "T00:00:00")
@@ -51,6 +55,7 @@ function Routes() {
     }
   } 
 
+
   return (
     <Switch>
       <Route exact={true} path="/">
@@ -65,8 +70,11 @@ function Routes() {
       <Route path="/reservations/:reservation_id/seat">
         <SeatReservation />
       </Route>
+      <Route path="/reservations/:reservation_id/edit">
+        <EditReservation reservations={reservations} setDay={setDay} setReservations={setReservations} reservationsError={reservationsError} setReservationsError={setReservationsError} />
+      </Route>
       <Route path="/dashboard">
-        <Dashboard date={currentDate} addDay={addDay} setDay={setDay} subtractDay={subtractDay} />
+        <Dashboard reservations={reservations} setReservations={setReservations} reservationsError={reservationsError} setReservationsError={setReservationsError} date={currentDate} addDay={addDay} setDay={setDay} subtractDay={subtractDay} />
       </Route>
       <Route exact={true} path="/tables/new">
         <NewTable />

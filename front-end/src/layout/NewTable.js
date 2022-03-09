@@ -15,7 +15,7 @@ function NewTable() {
   const changeHandler = (event) => {
     let { name, value } = event.target;
     if (name === "capacity") {
-      value = Number(value)
+      value = Number(value);
     }
     setFormData((prevData) => {
       return {
@@ -26,33 +26,37 @@ function NewTable() {
   };
 
   const makeTable = (event) => {
-    event.preventDefault()
-    setError(null)
-    createTable(formData)
+    const abortController = new AbortController();
+    event.preventDefault();
+    setError(null);
+    createTable(formData, abortController.signal)
       .then(setFormData(initialFormData))
       .then(() => history.push("/dashboard"))
-      .catch(setError)
-}
+      .catch(setError);
+    return () => abortController.abort();
+  };
 
   return (
     <>
-    <ErrorAlert error={error} />
-    <form onSubmit={makeTable}>
-      <label htmlFor="table_name">Table Name:</label>
-      <input
-        name="table_name"
-        onChange={changeHandler}
-        value={formData.table_name}
-      />
-      <label htmlFor="capacity">Capacity:</label>
-      <input
-        name="capacity"
-        onChange={changeHandler}
-        value={formData.capacity}
-      />
-      <button type="submit">Submit</button>
-      <button type="button" onClick={() => history.goBack()}>Cancel</button>
-    </form>
+      <ErrorAlert error={error} />
+      <form onSubmit={makeTable}>
+        <label htmlFor="table_name">Table Name:</label>
+        <input
+          name="table_name"
+          onChange={changeHandler}
+          value={formData.table_name}
+        />
+        <label htmlFor="capacity">Capacity:</label>
+        <input
+          name="capacity"
+          onChange={changeHandler}
+          value={formData.capacity}
+        />
+        <button type="submit">Submit</button>
+        <button type="button" onClick={() => history.goBack()}>
+          Cancel
+        </button>
+      </form>
     </>
   );
 }

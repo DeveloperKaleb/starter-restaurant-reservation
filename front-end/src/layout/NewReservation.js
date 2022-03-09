@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import ErrorAlert from "./ErrorAlert";
-import { createReservation } from "../utils/api" 
+import { useHistory } from "react-router-dom";
+import { createReservation } from "../utils/api";
+import ReservationForm from "./ReservationForm";
 
 function NewReservation({ setDay }) {
   const initialFormData = {
@@ -13,95 +13,33 @@ function NewReservation({ setDay }) {
     people: 0,
   };
   const [formData, setFormData] = useState(initialFormData);
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
   const history = useHistory();
 
-  const updateForm = (event) => {
-    let { value, name } = event.target;
-    if (name === "people") {
-      value = Number(value)
-    }
-    setFormData((prevData) => {
-      return {
-        ...prevData,
-        [name]: value,
-      };
-    });
-  };
-
   const makeReservation = (event) => {
-      event.preventDefault()
-      setError(null)
-      createReservation(formData)
-        .then((response) => {
-          setDay(new Date(response.reservation_date))
-        })
-        .then(setFormData(initialFormData))
-        .then(() => history.push("/dashboard"))
-        .catch(setError)
-  }
+    const abortController = new AbortController();
+    event.preventDefault();
+    setError(null);
+    createReservation(formData, abortController.signal)
+      .then((response) => {
+        setDay(new Date(response.reservation_date));
+      })
+      .then(setFormData(initialFormData))
+      .then(() => history.push("/dashboard"))
+      .catch(setError);
+    return () => abortController.abort();
+  };
 
   return (
     <>
       <div>
         <form onSubmit={makeReservation}>
           <h2>Create Reservation</h2>
-          <ErrorAlert error={error} />
-          <div>
-            <label htmlFor="first_name">First Name:</label>
-            <input
-              name="first_name"
-              onChange={updateForm}
-              value={formData.first_name}
-              required
-            />
-            <label htmlFor="last_name">Last Name:</label>
-            <input
-              name="last_name"
-              onChange={updateForm}
-              value={formData.last_name}
-              required
-            />
-            <label htmlFor="mobile_number">Cellphone Number:</label>
-            <input
-              name="mobile_number"
-              type="tel"
-              onChange={updateForm}
-              value={formData.mobile_number}
-              required
-            />
-            <label htmlFor="reservation_date">Reservation Date:</label>
-            <input
-              name="reservation_date"
-              type="date"
-              placeholder="YYYY-MM-DD"
-              onChange={updateForm}
-              value={formData.reservation_date}
-              required
-            />
-            <label htmlFor="reservation_time">Reservation Time:</label>
-            <input
-              name="reservation_time"
-              type="time"
-              placeholder="HH:MM"
-              pattern="[0-9]{2}:[0-9]{2}"
-              onChange={updateForm}
-              value={formData.reservation_time}
-              required
-            />
-            <label htmlFor="people">Number of People in Party:</label>
-            <input
-              name="people"
-              type="number"
-              onChange={updateForm}
-              value={formData.people}
-              required
-            />
-          </div>
-          <button type="submit">Submit</button>
-          <Link to="/">
-            <button type="button">Cancel</button>
-          </Link>
+          <ReservationForm
+            error={error}
+            setFormData={setFormData}
+            formData={formData}
+          />
         </form>
       </div>
     </>

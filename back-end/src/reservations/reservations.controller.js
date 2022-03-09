@@ -245,7 +245,7 @@ module.exports = {
   ],
   updateReservation: [
     dataExists,
-    reservationIsValid,
+    asyncErrorBoundary(reservationIsValid),
     validateAttributes,
     validateDateAndTimeFormat,
     dateIsDuringOpenHoursAndInTheFuture,

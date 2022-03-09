@@ -11,10 +11,8 @@ import FormattedTables from "./FormattedTables";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date, addDay, setDay, subtractDay }) {
-  const [reservations, setReservations] = useState(null);
+function Dashboard({ reservations, setReservations, reservationsError, setReservationsError, date, addDay, setDay, subtractDay }) {
   const [tables, setTables] = useState(null);
-  const [reservationsError, setReservationsError] = useState(null);
   const [tablesError, setTablesError] = useState(null);
 
   useEffect(loadDashboard, [date]);
@@ -24,8 +22,10 @@ function Dashboard({ date, addDay, setDay, subtractDay }) {
     setReservationsError(null);
     setTablesError(null);
     listReservations({ date }, abortController.signal)
-      .then(setReservations)
-      .catch(setReservationsError);
+      .then((response) => {
+        setReservations(response)
+      })
+      .catch(setReservationsError)
     listTables(abortController.signal).then(setTables).catch(setTablesError);
     return () => abortController.abort();
   }
@@ -35,11 +35,20 @@ function Dashboard({ date, addDay, setDay, subtractDay }) {
 
   if (tables && reservations) {
     const filteredReservations = reservations.filter(
-      (reservation) => reservation?.status !== "finished"
+      (reservation) => reservation?.status !== "finished" && reservation?.status !== "cancelled"
     );
 
     formattedReservations = filteredReservations.map((reservation) => {
-      return <FormattedReservation reservation={reservation} />;
+      return (
+        <FormattedReservation
+          setReservations={setReservations}
+          setReservationsError={setReservationsError}
+          setTables={setTables}
+          setTablesError={setTablesError}
+          date={date}
+          reservation={reservation}
+        />
+      );
     });
 
     formattedTables = tables.map((table) => {

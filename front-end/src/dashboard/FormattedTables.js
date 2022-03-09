@@ -28,8 +28,8 @@ function FormattedTables({ setReservations, setReservationsError, setTables, set
   }
 
   return (
-    <li>
-      {finishError ? <ErrorAlert error={finishError} /> : null}
+    <li key ={`${table_id}`}>
+      <ErrorAlert error={finishError} />
       <h3>{table_name}</h3>
       <h4>{capacity}</h4>
       <h5 data-table-id-status={`${table.table_id}`}>
