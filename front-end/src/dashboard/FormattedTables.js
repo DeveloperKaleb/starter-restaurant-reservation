@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import ErrorAlert from "../layout/ErrorAlert";
 import { finishTable, listReservations, listTables } from "../utils/api";
 
-function FormattedTables({ setReservations, setReservationsError, setTables, setTablesError, date, table }) {
+function FormattedTables({
+  setReservations,
+  setReservationsError,
+  setTables,
+  setTablesError,
+  date,
+  table,
+}) {
   const { table_id, table_name, capacity, reservation_id } = table;
   const [finishError, setFinishError] = useState(null);
 
@@ -15,28 +22,32 @@ function FormattedTables({ setReservations, setReservationsError, setTables, set
       return null;
     finishTable(table_id)
       .then(() => {
-        const abortController = new AbortController()
+        const abortController = new AbortController();
         listReservations({ date }, abortController.signal)
           .then(setReservations)
           .catch(setReservationsError);
         listTables(abortController.signal)
           .then(setTables)
           .catch(setTablesError);
-        return () => abortController.abort()
+        return () => abortController.abort();
       })
       .catch(setFinishError);
   }
 
   return (
-    <li key ={`${table_id}`}>
+    <li className="list-group-item list-group-item-success" key={`${table_id}`}>
       <ErrorAlert error={finishError} />
       <h3>{table_name}</h3>
-      <h4>{capacity}</h4>
+      <h4>Capacity: {capacity}</h4>
       <h5 data-table-id-status={`${table.table_id}`}>
         {!reservation_id ? "Free" : "Occupied"}
       </h5>
       {reservation_id ? (
-        <button data-table-id-finish={table.table_id} onClick={confirmFinish}>
+        <button
+          data-table-id-finish={table.table_id}
+          className="m-1 btn btn-info"
+          onClick={confirmFinish}
+        >
           Finish
         </button>
       ) : null}

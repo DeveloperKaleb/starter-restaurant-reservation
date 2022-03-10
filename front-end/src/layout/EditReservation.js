@@ -4,13 +4,23 @@ import { updateReservation, listReservations } from "../utils/api";
 import ReservationForm from "./ReservationForm";
 import ErrorAlert from "./ErrorAlert";
 
-function EditReservation({ reservations, setDay, setReservations, reservationsError, setReservationsError }) {
+function EditReservation({
+  reservations,
+  setDay,
+  setReservations,
+  reservationsError,
+  setReservationsError,
+}) {
   const { reservation_id } = useParams();
   const [formData, setFormData] = useState(null);
   const [error, setError] = useState(null);
   const history = useHistory();
 
-  useEffect(loadReservations, [])
+  useEffect(loadReservations, [
+    reservation_id,
+    setReservations,
+    setReservationsError,
+  ]);
 
   function loadReservations() {
     const abortController = new AbortController();
@@ -19,7 +29,7 @@ function EditReservation({ reservations, setDay, setReservations, reservationsEr
       .then((response) => {
         const reservation = response.find(
           (reservation) => reservation.reservation_id === Number(reservation_id)
-        )
+        );
         setFormData({
           first_name: reservation.first_name,
           last_name: reservation.last_name,
@@ -28,13 +38,12 @@ function EditReservation({ reservations, setDay, setReservations, reservationsEr
           reservation_time: reservation.reservation_time,
           reservation_id: reservation.reservation_id,
           people: reservation.people,
-        })
-        setReservations(response)
+        });
+        setReservations(response);
       })
-      .catch(setReservationsError)
+      .catch(setReservationsError);
     return () => abortController.abort();
   }
-
 
   const editReservation = (event) => {
     event.preventDefault();
@@ -42,20 +51,10 @@ function EditReservation({ reservations, setDay, setReservations, reservationsEr
     updateReservation(formData, reservation_id)
       .then((response) => {
         setDay(new Date(response.reservation_date));
-        setFormData({
-        first_name: response.first_name,
-        last_name: response.last_name,
-        mobile_number: response.mobile_number,
-        reservation_date: response.reservation_date,
-        reservation_time: response.reservation_time,
-        reservation_id: response.reservation_id,
-        people: response.people,
       })
-    })
       .then(() => history.push("/dashboard"))
       .catch(setError);
   };
-  console.log(formData)
 
   return (
     <>
@@ -63,7 +62,13 @@ function EditReservation({ reservations, setDay, setReservations, reservationsEr
         <ErrorAlert error={reservationsError} />
         <form onSubmit={editReservation}>
           <h2>Edit Reservation</h2>
-          {formData ? <ReservationForm error={error} setFormData={setFormData} formData={formData} /> : null}
+          {formData ? (
+            <ReservationForm
+              error={error}
+              setFormData={setFormData}
+              formData={formData}
+            />
+          ) : null}
         </form>
       </div>
     </>

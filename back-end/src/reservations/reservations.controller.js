@@ -18,17 +18,17 @@ function dataExists(req, res, next) {
 }
 
 async function reservationIsValid(req, res, next) {
-  const { reservation_id } = req.params
+  const { reservation_id } = req.params;
 
-  const reservation = await service.read(reservation_id)
+  const reservation = await service.read(reservation_id);
 
   if (reservation) {
-    next()
+    next();
   } else {
     next({
       message: `Reservation ${reservation_id} does not exist`,
       status: 404,
-    })
+    });
   }
 }
 
@@ -220,12 +220,12 @@ async function updateStatus(req, res) {
 }
 
 async function updateReservation(req, res) {
-  const response = await service.updateReservation(req.body.data)
-  const data = response[0]
+  const response = await service.updateReservation(req.body.data);
+  const data = response[0];
 
   res.json({
     data,
-  })
+  });
 }
 
 module.exports = {
@@ -250,6 +250,6 @@ module.exports = {
     validateDateAndTimeFormat,
     dateIsDuringOpenHoursAndInTheFuture,
     timeIsDuringHoursOfAccomodation,
-    asyncErrorBoundary(updateReservation)
-  ]
+    asyncErrorBoundary(updateReservation),
+  ],
 };

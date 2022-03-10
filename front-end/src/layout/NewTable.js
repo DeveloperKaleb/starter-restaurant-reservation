@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { createTable } from "../utils/api";
 import ErrorAlert from "./ErrorAlert";
 
@@ -26,14 +26,12 @@ function NewTable() {
   };
 
   const makeTable = (event) => {
-    const abortController = new AbortController();
     event.preventDefault();
     setError(null);
-    createTable(formData, abortController.signal)
+    createTable(formData)
       .then(setFormData(initialFormData))
       .then(() => history.push("/dashboard"))
       .catch(setError);
-    return () => abortController.abort();
   };
 
   return (

@@ -12,7 +12,6 @@ function Search() {
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [error, setError] = useState(null);
 
   const updateForm = (event) => {
     const { value, name } = event.target;
@@ -24,7 +23,6 @@ function Search() {
   const searchReservations = (event) => {
     const abortController = new AbortController();
     event.preventDefault();
-    setError(null);
 
     const { mobile_number } = formData;
     listReservations({ mobile_number }, abortController.signal)
@@ -34,7 +32,7 @@ function Search() {
   };
 
   const formattedReservations = reservations.map((reservation) => {
-    return <FormattedReservation reservation={reservation} />;
+    return <FormattedReservation key={reservation.reservation_id} reservation={reservation} />;
   });
 
   return (
@@ -45,7 +43,7 @@ function Search() {
           name="mobile_number"
           placeholder="Enter a customer's phone number"
           onChange={updateForm}
-          value={FormData.mobile_number}
+          value={formData.mobile_number}
         />
         <button type="submit">Find</button>
       </form>

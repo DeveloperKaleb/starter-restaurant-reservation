@@ -17,17 +17,15 @@ function NewReservation({ setDay }) {
   const history = useHistory();
 
   const makeReservation = (event) => {
-    const abortController = new AbortController();
     event.preventDefault();
     setError(null);
-    createReservation(formData, abortController.signal)
+    createReservation(formData)
       .then((response) => {
         setDay(new Date(response.reservation_date));
       })
       .then(setFormData(initialFormData))
       .then(() => history.push("/dashboard"))
       .catch(setError);
-    return () => abortController.abort();
   };
 
   return (

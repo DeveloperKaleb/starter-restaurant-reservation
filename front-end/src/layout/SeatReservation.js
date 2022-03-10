@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { listTables, occupyTable } from "../utils/api";
 import ErrorAlert from "./ErrorAlert";
 
@@ -22,7 +22,7 @@ function SeatReservation() {
 
   const tableOptions = tables.map((table) => {
     return (
-      <option value={table.table_id}>
+      <option value={table.table_id} key={`${table.table_id}`}>
         {table.table_name} - {table.capacity}
       </option>
     );

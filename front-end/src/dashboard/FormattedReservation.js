@@ -40,7 +40,10 @@ function FormattedReservation({
   };
 
   return (
-    <li key={`${reservation_id}`}>
+    <li
+      className="list-group-item list-group-item-info"
+      key={`${reservation_id}`}
+    >
       <ErrorAlert error={statusError} />
       <h3>
         {first_name} {last_name}
@@ -50,10 +53,13 @@ function FormattedReservation({
       <h4>{people} people</h4>
       <h5 data-reservation-id-status={reservation.reservation_id}>{status}</h5>
       <Link to={`reservations/${reservation_id}/edit`}>
-        <button type="button">Edit</button>
+        <button type="button" className="m-1 btn btn-info">
+          Edit
+        </button>
       </Link>
       <button
         data-reservation-id-cancel={reservation.reservation_id}
+        className="m-1 btn btn-info"
         type="button"
         onClick={cancelReservation}
       >
@@ -61,7 +67,9 @@ function FormattedReservation({
       </button>
       {status === "booked" ? (
         <Link to={`/reservations/${reservation_id}/seat`}>
-          <button type="button">Seat</button>
+          <button type="button" className="m-1 btn btn-info">
+            Seat
+          </button>
         </Link>
       ) : null}
     </li>
