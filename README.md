@@ -1,25 +1,19 @@
 # Periodic Tables
 
-> You have been hired as a full stack developer at _Periodic Tables_, a startup that is creating a reservation system for fine dining restaurants.
-> The software is used only by restaurant personnel when a customer calls to request a reservation.
-> At this point, the customers will not access the system online.
+The live site can be found at this [link](https://blooming-mountain-client.herokuapp.com/dashboard).
 
-There are no user stories for deployment: it is expected that you will deploy the application to production after you finish a user story.
+The tables below describe the API endpoints and their responses:
 
-There are no user stories for logging: it is expected that you will add logging to the application with enough detail to help you diagnose issues in production.
-
-## Existing files
-
-This repository is set up as a *monorepo*, meaning that the frontend and backend projects are in one repository. This allows you to open both projects in the same editor.
-
-As you work through the user stories listed later in this document, you will be writing code that allows your frontend and backend applications to talk to each other. You will also write code to allow your controllers and services to connect to, and query, your PostgreSQL database via [Knex](http://knexjs.org/).
-
-The table below describes the folders in this starter repository:
-
-| Folder/file path | Description                                                      |
-| ---------------- | ---------------------------------------------------------------- |
-| `./back-end`     | The backend project, which runs on `localhost:5000` by default.  |
-| `./front-end`    | The frontend project, which runs on `localhost:3000` by default. |
+### /reservations
+Body attributes with a (\*)asterisk are require for a good request.
+|        Route         | Request |                          Body                           |           Query params          |                    Response                   |
+| -------------------- | ------- | ------------------------------------------------------- | ------------------------------- | --------------------------------------------- |
+|                      |         |                                                         |                                 | returns all reservations                      | 
+| `/`                  | GET     |                                                         | reservation_date, mobile_number | if no query is provided,                      |
+|                      |         |                \*first_name, \*last_name,               |                                 | returns matching ones if one is               | 
+| `/`                  | POST    |            \*mobile_number, \*reservation_date,         |                                 |                                               |
+|                      |         |          \*reservation_time, \*people, status           |                                 |                                               |   
+| `/:reservation_id`   | GET     |                                                         |                                 |                                               |
 
 This starter code closely follows the best practices and patterns established in the Robust Server Structure module.
 
