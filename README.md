@@ -45,7 +45,12 @@ If you have trouble getting the server to run I'd be happy to try and help you s
 ## Screenshots
   
   ![Dashboard screenshot](screenshots/Dashboard%20Screen.png)
-
+  
+  ![Create Reservation screenshot](screenshots/Create%20Reservation%20Screen.png)
+  
+  ![Create Table screenshot](screenshots/Create%20Table%20Screen.png)
+  
+  ![Search screenshot](screenshots/Search%20Screen.png)
 
 ## Technology Stack
   
