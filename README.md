@@ -9,9 +9,8 @@ Body attributes with a (\*)asterisk are require for a good request.
 |        Route         | Request |     Body                |  Query params   |  Response     |
 |:-------------------- |:------- |:-----------------------:| ---------------:| -------------:| 
 | `/`                  | GET     |                         | reservation_date, mobile_number |returns all reservations if no query is provided, returns matching ones if one is |
-| `/`                  | POST    |  \*first_name, \*last_name, \*mobile_number, \*reservation_date, \*reservation_time, \*people, status |                                 | returns the newly created reservation       |
-|                      |         |                         |                 |               |   
-| `/:reservation_id`   | GET     |                         |                 |               |
+| `/`                  | POST    |  \*first_name, \*last_name, \*mobile_number, \*reservation_date, \*reservation_time, \*people, status |                                 | returns the newly created reservation       |   
+| `/:reservation_id`   | GET     |                         |                 | returns the data for the requested reservation     |
 
 This starter code closely follows the best practices and patterns established in the Robust Server Structure module.
 
