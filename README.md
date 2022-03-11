@@ -43,13 +43,17 @@ I recommend that you use [Heroku](https://devcenter.heroku.com/articles/deployin
 If you have trouble getting the server to run I'd be happy to try and help you set things up.
 
 ## Screenshots
-  
+
+#### Dashboard
   ![Dashboard screenshot](screenshots/Dashboard%20Screen.png)
   
+#### Create Reservation
   ![Create Reservation screenshot](screenshots/Create%20Reservation%20Screen.png)
   
+#### Create Table
   ![Create Table screenshot](screenshots/Create%20Table%20Screen.png)
   
+#### Search
   ![Search screenshot](screenshots/Search%20Screen.png)
 
 ## Technology Stack
