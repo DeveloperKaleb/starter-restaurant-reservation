@@ -38,11 +38,12 @@ Body attributes with a (\*)asterisk are required for a good request.
 1. When pushing to your deployed app be sure to make use of the git subtree push --prefix <file> console command. This is important because this respository is a monorepo containing both front and back end.
 1. After deploying with your chosen host be sure to set your `env` files up in your back-end and front-end.  
 
+  
+I recommend that you use [Heroku](https://devcenter.heroku.com/articles/deploying-nodejs) to deploy this project.
 If you have trouble getting the server to run I'd be happy to try and help you set things up.
 
 ## Screenshots
 
-Although the user stories do not say anything about deployment, you should consider deploying early and often. You may even decide to deploy before adding any features. We recommend that you use [Heroku](https://devcenter.heroku.com/articles/deploying-nodejs) to deploy this project.
 
 ## Technology Stack
   
