@@ -1,5 +1,7 @@
 # Periodic Tables
 
+This app can be used to keep a record of existing reservations for a restaurant. The app will display all reservations for today and you have the option to look ahead at future dates and their reservations. It has a simple user interface for creating and editing reservations and creating new tables. Users can also search all reservations (current and past) by mobile phone on the search screen. 
+
 The live site can be found at this [link](https://blooming-mountain-client.herokuapp.com/dashboard).
 
 The tables below describe the API endpoints and their responses:
