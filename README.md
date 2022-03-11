@@ -5,19 +5,25 @@ The live site can be found at this [link](https://blooming-mountain-client.herok
 The tables below describe the API endpoints and their responses:
 
 ### /reservations
-Body attributes with a (\*)asterisk are require for a good request.
+Body attributes with a (\*)asterisk are required for a good request.
 |        Route         | Request |     Body                |  Query params   |  Response     |
 |:-------------------- |:------- |:-----------------------:| ---------------:| -------------:| 
-| `/`                  | GET     |                         | reservation_date, mobile_number |returns all reservations if no query is provided, returns matching ones if one is |
-| `/`                  | POST    |  \*first_name, \*last_name, \*mobile_number, \*reservation_date, \*reservation_time, \*people, status |                                 | returns the newly created reservation       |   
+| `/`                  | GET     |    | reservation_date, mobile_number | returns all reservations if no query is provided, returns matching ones if one is |
+| `/`    |  POST  |  \*first_name, \*last_name, \*mobile_number, \*reservation_date, \*reservation_time, \*people, status |  | returns the newly created reservation |   
 | `/:reservation_id`   | GET     |                         |                 | returns the data for the requested reservation     |
 | `/:reservation_id`   | PUT     | \*first_name, \*last_name, \*mobile_number, \*reservation_date, \*reservation_time, \*people, status | | returns the updated reservation |
-| `/:reservation_id/status` | PUT | \*status | | returns updated reservation |
+| `/:reservation_id/status` | PUT | \*status | | returns the updated reservation |
 | `/:reservation_id/edit` | PUT | \*first_name, \*last_name, \*mobile_number, \*reservation_date, \*reservation_time, \*people, status | | returns the updated reservation | 
 
-This starter code closely follows the best practices and patterns established in the Robust Server Structure module.
+### /tables
+Body attributes with a (\*)asterisk are required for a good request.
+|        Route         | Request |     Body                |  Query params   |  Response     |
+|:-------------------- |:------- |:-----------------------:| ---------------:| -------------:|
+| `/`                  | GET     |                         |                 | returns all tables |
+| `/`                  | POST    | \*table_name, \*capacity |                | returns the newly created table |
+| `/:table_id/seat`    | PUT     | \*reservation_id        |                 | returns the updated table |
+| `/:table_id/seat`    | DELETE  |                         |                 | returns the table which had its reservation_id data deleted |
 
-**Note**: Please do not submit a pull request to this repository with your solution.
 
 ### Backend Existing files
 
