@@ -43,6 +43,8 @@ I recommend that you use [Heroku](https://devcenter.heroku.com/articles/deployin
 If you have trouble getting the server to run I'd be happy to try and help you set things up.
 
 ## Screenshots
+  
+  ![Dashboard screenshot](screenshots/Dashboard%20Screen.png)
 
 
 ## Technology Stack
