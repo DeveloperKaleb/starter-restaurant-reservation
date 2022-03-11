@@ -6,14 +6,12 @@ The tables below describe the API endpoints and their responses:
 
 ### /reservations
 Body attributes with a (\*)asterisk are require for a good request.
-|        Route         | Request |                          Body                           |           Query params          |                    Response                   |
-| -------------------- | ------- | ------------------------------------------------------- | ------------------------------- | --------------------------------------------- |
-|                      |         |                                                         |                                 | returns all reservations                      | 
-| `/`                  | GET     |                                                         | reservation_date, mobile_number | if no query is provided,                      |
-|                      |         |                \*first_name, \*last_name,               |                                 | returns matching ones if one is               | 
-| `/`                  | POST    |            \*mobile_number, \*reservation_date,         |                                 |                                               |
-|                      |         |          \*reservation_time, \*people, status           |                                 |                                               |   
-| `/:reservation_id`   | GET     |                                                         |                                 |                                               |
+|        Route         | Request |     Body                |  Query params   |  Response     |
+|:-------------------- |:------- |:-----------------------:| ---------------:| -------------:| 
+| `/`                  | GET     |                         | reservation_date, mobile_number |returns all reservations if no query is provided, returns matching ones if one is |
+| `/`                  | POST    |  \*first_name, \*last_name, \*mobile_number, \*reservation_date, \*reservation_time, \*people, status |                                 | returns the newly created reservation       |
+|                      |         |                         |                 |               |   
+| `/:reservation_id`   | GET     |                         |                 |               |
 
 This starter code closely follows the best practices and patterns established in the Robust Server Structure module.
 
