@@ -12,6 +12,8 @@ Body attributes with a (\*)asterisk are require for a good request.
 | `/`                  | POST    |  \*first_name, \*last_name, \*mobile_number, \*reservation_date, \*reservation_time, \*people, status |                                 | returns the newly created reservation       |   
 | `/:reservation_id`   | GET     |                         |                 | returns the data for the requested reservation     |
 | `/:reservation_id`   | PUT     | \*first_name, \*last_name, \*mobile_number, \*reservation_date, \*reservation_time, \*people, status | | returns the updated reservation |
+| `/:reservation_id/status` | PUT | \*status | | returns updated reservation |
+| `/:reservation_id/edit` | PUT | \*first_name, \*last_name, \*mobile_number, \*reservation_date, \*reservation_time, \*people, status | | returns the updated reservation | 
 
 This starter code closely follows the best practices and patterns established in the Robust Server Structure module.
 
