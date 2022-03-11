@@ -40,8 +40,17 @@ Body attributes with a (\*)asterisk are required for a good request.
 
 If you have trouble getting the server to run I'd be happy to try and help you set things up.
 
-#### Screenshots
-
+## Screenshots
 
 Although the user stories do not say anything about deployment, you should consider deploying early and often. You may even decide to deploy before adding any features. We recommend that you use [Heroku](https://devcenter.heroku.com/articles/deploying-nodejs) to deploy this project.
 
+## Technology Stack
+  
+* HTML
+* CSS
+* React
+* Javascript
+* Node.js
+* Express
+* Knex  
+* Postgres  
